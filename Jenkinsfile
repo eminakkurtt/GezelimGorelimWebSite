@@ -9,26 +9,40 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Docker Build') {
             steps {
-                echo 'Build aşaması başladı.'
+                echo 'Docker image oluşturuluyor...'
+
+                sh '''
+                    docker build -t gezelim-gorelim:latest .
+                '''
             }
         }
 
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                echo 'Test aşaması başladı.'
+                echo 'Container deploy ediliyor...'
+
+                sh '''
+                    docker stop gezelim-gorelim || true
+                    docker rm gezelim-gorelim || true
+
+                    docker run -d \
+                        --name gezelim-gorelim \
+                        -p 8080:80 \
+                        gezelim-gorelim:latest
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline başarıyla tamamlandı.'
+            echo 'GezelimGorelimWebSite başarıyla deploy edildi.'
         }
 
         failure {
-            echo 'Pipeline başarısız oldu.'
+            echo 'Deployment başarısız oldu.'
         }
     }
 }
