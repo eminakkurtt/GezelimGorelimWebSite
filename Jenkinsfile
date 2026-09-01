@@ -1,21 +1,14 @@
-
-
 pipeline {
     agent any
 
     stages {
 
-        stage('Test') {
+        stage('Checkout') {
             steps {
-                echo 'Proje dosyalari kontrol ediliyor...'
+                echo 'GitHub repository checkout ediliyor...'
 
-                sh '''
-                    test -f GezelimGorelimWebsite-main/index.html
-                    test -f GezelimGorelimWebsite-main/css/style.css
-                    test -d GezelimGorelimWebsite-main/img
-
-                    echo "Temel dosya kontrolleri basarili."
-                '''
+                git branch: 'main',
+                    url: 'https://github.com/eminakkurtt/GezelimGorelimWebSite.git'
             }
         }
 
@@ -31,7 +24,7 @@ pipeline {
 
         stage('Stop Old Container') {
             steps {
-                echo 'Eski container kaldiriliyor...'
+                echo 'Eski container kontrol ediliyor...'
 
                 sh '''
                     docker rm -f gezelim-gorelim || true
@@ -45,21 +38,31 @@ pipeline {
 
                 sh '''
                     docker run -d \
-                    --name gezelim-gorelim \
-                    --restart unless-stopped \
-                    -p 8080:80 \
-                    gezelim-gorelim:latest
+                        --name gezelim-gorelim \
+                        --restart unless-stopped \
+                        -p 8080:80 \
+                        gezelim-gorelim:latest
                 '''
             }
         }
 
         stage('Health Check') {
             steps {
-                echo 'Web sitesi kontrol ediliyor...'
+                echo 'Web sitesi health check yapiliyor...'
 
                 sh '''
-                    sleep 3
-                    curl -f http://host.docker.internal:8080
+                    sleep 5
+
+                    echo "Health status:"
+                    docker inspect gezelim-gorelim \
+                        --format "{{.State.Health.Status}}"
+
+                    STATUS=$(docker inspect gezelim-gorelim \
+                        --format "{{.State.Health.Status}}")
+
+                    test "$STATUS" = "healthy"
+
+                    echo "Health check basarili."
                 '''
             }
         }
@@ -68,23 +71,24 @@ pipeline {
             steps {
                 echo 'Deployment ve container kontrol ediliyor...'
 
-        sh '''
-            set -e
+                sh '''
+                    set -e
 
-            echo "===== CONTAINER DURUMU ====="
-            docker ps --filter "name=gezelim-gorelim"
+                    echo "===== CONTAINER DURUMU ====="
+                    docker ps --filter "name=gezelim-gorelim"
 
-            echo "===== HEALTH STATUS ====="
-            docker inspect gezelim-gorelim \
-                --format "{{.State.Health.Status}}"
+                    echo "===== HEALTH STATUS ====="
+                    docker inspect gezelim-gorelim \
+                        --format "{{.State.Health.Status}}"
 
-            echo "===== RESOURCE USAGE ====="
-            docker stats gezelim-gorelim --no-stream
+                    echo "===== RESOURCE USAGE ====="
+                    docker stats gezelim-gorelim --no-stream
 
-            echo "===== SON LOGLAR ====="
-            docker logs --tail 20 gezelim-gorelim
+                    echo "===== SON LOGLAR ====="
+                    docker logs --tail 20 gezelim-gorelim
 
-            echo "===== DEPLOYMENT BASARILI ====="
+                    echo "===== DEPLOYMENT BASARILI ====="
+                '''
             }
         }
     }
