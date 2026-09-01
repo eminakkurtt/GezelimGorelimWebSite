@@ -1,82 +1,625 @@
-.resimslider{
+/* =========================================================
+   GEZELİM GÖRELİM
+   Modern Website Style
+   ========================================================= */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+
+/* =========================================================
+   GENEL
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding-top: 56px;
+    font-family: 'Montserrat', sans-serif;
+    color: #1f2937;
+    background-color: #ffffff;
+}
+
+section {
+    scroll-margin-top: 70px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    padding: 12px 0;
+    background: rgba(15, 23, 42, 0.97) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.navbar-nav {
+    gap: 5px;
+}
+
+.nav-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 14px !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 2px;
+    height: 2px;
+    background: #38bdf8;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
+
+.carousel {
+    margin-bottom: 0;
+}
+
+.carousel-item {
+    position: relative;
+}
+
+.resimslider {
+    width: 100%;
     height: 600px;
+    object-fit: cover;
+    object-position: center;
 }
-body{
-   padding-top: 50px;
-    font-family: 'Ubuntu', sans-serif;
+
+.carousel-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.10),
+        rgba(0, 0, 0, 0.70)
+    );
 }
-.hakkimizda{
-    background-color: #bcdcf1;
+
+.carousel-caption {
+    z-index: 2;
+    bottom: 70px;
 }
-.ayrac{
+
+.carousel-caption h5 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.carousel-indicators {
+    z-index: 3;
+}
+
+.carousel-indicators button {
+    width: 35px;
+    height: 4px;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   BÖLÜM BAŞLIKLARI
+   ========================================================= */
+
+section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.ayrac {
     border: none;
-    border-top: 3px solid #080808;
-    max-width: 250px;
-    margin: 25px auto;
-}
-.ibeyaz{
-    color: #9d9b9b;
-    position: relative;
-    top: -55px;
-    font-size: 40px;
-    border: 10px solid white;
-    background-color: white;
-}
-.igri{
-    color: #9d9b9b;
-    position: relative;
-    top: -55px;
-    font-size: 40px;
-    border: 10px solid #bcdcf1;
-    background-color: #bcdcf1;
-}
-.yerlerimiz>img:hover{
-    opacity: 0.8;
-}
-.görseller{
-    background-color: #bcdcf1;
-}
-.figure :hover{
+    border-top: 3px solid currentColor;
+    max-width: 90px;
+    margin: 20px auto 45px;
     opacity: 0.8;
 }
 
-.formInput{
-    display: inline-block;
-    text-align: left;
-    width: 57rem;
+
+/* =========================================================
+   ÜLKE TARİHİ
+   ========================================================= */
+
+.hakkimizda {
+    background: linear-gradient(
+        135deg,
+        #e0f2fe 0%,
+        #bae6fd 100%
+    );
+
+    padding-top: 90px !important;
+    padding-bottom: 90px !important;
 }
 
-.formLabel{
-    display: inline-block;
+.hakkimizda .container {
+    max-width: 1000px;
+}
+
+.hakkimizda p {
+    color: #334155;
+    font-family: Arial, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
     text-align: left;
 }
+
+
+/* =========================================================
+   İKONLAR
+   ========================================================= */
+
+.ibeyaz,
+.igri {
+    position: relative;
+    top: -68px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    font-size: 26px;
+
+    border-radius: 50%;
+}
+
+.ibeyaz {
+    color: #64748b;
+    background-color: #ffffff;
+    border: 8px solid #ffffff;
+}
+
+.igri {
+    color: #64748b;
+    background-color: #e0f2fe;
+    border: 8px solid #e0f2fe;
+}
+
+
+/* =========================================================
+   GEZİLECEK YERLER
+   ========================================================= */
+
+.GezilecekYerler {
+    background-color: #ffffff;
+
+    padding-top: 90px !important;
+    padding-bottom: 100px !important;
+}
+
+.yerlerimiz {
+    overflow: hidden;
+
+    border: none;
+    border-radius: 18px;
+
+    background-color: #ffffff;
+
+    transition: all 0.35s ease;
+}
+
+.yerlerimiz:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.15) !important;
+}
+
+.yerlerimiz > img {
+    width: 100%;
+    height: 240px;
+
+    object-fit: cover;
+
+    transition: transform 0.5s ease;
+}
+
+.yerlerimiz:hover > img {
+    opacity: 1;
+    transform: scale(1.06);
+}
+
+.yerlerimiz .card-body {
+    padding: 25px;
+}
+
+.yerlerimiz .card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    color: #0f172a;
+
+    margin-bottom: 15px;
+}
+
+.yerlerimiz .card-text {
+    color: #64748b;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+}
+
+.yerlerimiz .card-footer {
+    border: none;
+    background: transparent;
+
+    padding-bottom: 20px;
+}
+
+
+/* =========================================================
+   GÖRSELLER
+   ========================================================= */
+
+.görseller {
+    background: linear-gradient(
+        135deg,
+        #e0f2fe 0%,
+        #bae6fd 100%
+    );
+
+    padding-top: 90px !important;
+    padding-bottom: 90px !important;
+}
+
+.görseller .figure {
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    margin-bottom: 25px;
+}
+
+.görseller .figure img {
+    width: 100%;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 16px !important;
+
+    transition: all 0.4s ease;
+}
+
+.görseller .figure:hover img {
+    opacity: 1;
+
+    transform: scale(1.06);
+
+    filter: brightness(0.85);
+}
+
+
+/* =========================================================
+   İLETİŞİM
+   ========================================================= */
+
+#iletisim {
+    background-color: #ffffff;
+
+    color: #1e293b;
+
+    padding-top: 90px !important;
+    padding-bottom: 100px !important;
+}
+
+#iletisim .container {
+    max-width: 1100px;
+}
+
+#iletisim form {
+    max-width: 900px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.formLabel {
+    color: #334155;
+
+    font-weight: 600;
+
+    padding-top: 10px;
+}
+
+.formInput,
+#iletisim textarea {
+    width: 100%;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    font-family: Arial, sans-serif;
+
+    transition: all 0.25s ease;
+}
+
+.formInput:focus,
+#iletisim textarea:focus {
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 0 0 3px rgba(56, 189, 248, 0.15);
+
+    outline: none;
+}
+
+#iletisim textarea {
+    resize: vertical;
+
+    min-height: 150px;
+}
+
+#iletisim button {
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 25px;
+
+    background-color: #0f172a;
+
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+#iletisim button:hover {
+    background-color: #0284c7;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   GOOGLE MAPS
+   ========================================================= */
+
+#iletisim iframe {
+    width: 100%;
+    height: 420px;
+
+    margin-top: 40px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .footer {
-    position: fixed;
-    bottom: 0;
+    position: relative;
+
     width: 100%;
-    left: 0;
-    height: 15vh;
+
+    height: auto;
+
+    left: auto;
+    bottom: auto;
+
+    margin-top: 0;
+
+    background-color: #0f172a !important;
 }
+
+.footer p {
+    margin: 0;
+
+    padding: 35px 15px !important;
+
+    color: #cbd5e1;
+
+    font-size: 0.9rem;
+
+    line-height: 1.8;
+}
+
+.footer b {
+    color: #38bdf8;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
 ul.breadcrumb {
-    padding: 10px 16px;
+    padding: 0;
+
+    margin: 0;
+
     list-style: none;
-    
-  }
-  ul.breadcrumb li {
+}
+
+ul.breadcrumb li {
     display: inline-flex;
-    font-size: 18px;
-  }
-  ul.breadcrumb li+li:before {
-    padding: 8px;
-    color: white;
+
+    align-items: center;
+
+    font-size: 0.9rem;
+}
+
+ul.breadcrumb li + li::before {
+    padding: 0 4px;
+
+    color: #64748b;
+
     content: "/";
-  }
-  ul.breadcrumb li a {
-    color: white;
+}
+
+ul.breadcrumb li a {
+    color: rgba(255, 255, 255, 0.85);
+
     text-decoration: none;
-  }
-  ul.breadcrumb li a:hover,:focus {
-    color: red;
-    text-decoration: none;
-  }
+}
+
+ul.breadcrumb li a:hover {
+    color: #38bdf8;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .navbar-nav {
+        padding-top: 15px;
+    }
+
+    .resimslider {
+        height: 450px;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.8rem;
+    }
+
+    ul.breadcrumb li {
+        display: block;
+    }
+
+    ul.breadcrumb li + li::before {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   MOBİL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding-top: 56px;
+    }
+
+    .resimslider {
+        height: 350px;
+    }
+
+    .carousel-caption {
+        bottom: 40px;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.4rem;
+    }
+
+    section h2 {
+        font-size: 1.6rem;
+    }
+
+    .hakkimizda p {
+        font-size: 0.95rem;
+
+        line-height: 1.8;
+    }
+
+    .yerlerimiz > img {
+        height: 220px;
+    }
+
+    .görseller .figure img {
+        height: 240px;
+    }
+
+    #iletisim iframe {
+        height: 300px;
+    }
+}
+
+
+/* =========================================================
+   KÜÇÜK TELEFON
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .resimslider {
+        height: 280px;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.1rem;
+    }
+
+    .hakkimizda,
+    .GezilecekYerler,
+    .görseller,
+    #iletisim {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .görseller .figure img {
+        height: 220px;
+    }
+
+    .footer p {
+        font-size: 0.8rem;
+    }
+}
