@@ -3,15 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo 'GitHub repository checkout ediliyor...'
-
-                git branch: 'main',
-                    url: 'https://github.com/eminakkurtt/GezelimGorelimWebSite.git'
-            }
-        }
-
         stage('Test') {
             steps {
                 echo 'Proje dosyalari kontrol ediliyor...'
@@ -38,7 +29,7 @@ pipeline {
 
         stage('Stop Old Container') {
             steps {
-                echo 'Eski container kontrol ediliyor...'
+                echo 'Eski container kaldiriliyor...'
 
                 sh '''
                     docker rm -f gezelim-gorelim || true
@@ -66,7 +57,7 @@ pipeline {
 
                 sh '''
                     sleep 3
-                    curl -f http://localhost:8080
+                    curl -f http://host.docker.internal:8080
                 '''
             }
         }
@@ -80,7 +71,7 @@ pipeline {
                     docker ps
 
                     echo "----- WEBSITE CHECK -----"
-                    curl -I http://localhost:8080
+                    curl -I http://host.docker.internal:8080
 
                     echo "Deployment kontrolu basarili."
                 '''
