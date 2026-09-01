@@ -55,7 +55,7 @@ pipeline {
 
                 sh '''
                     docker ps
-                    docker images gezelim-gorelim
+                    docker images gezelim-gorelim --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}"
                 '''
             }
         }
