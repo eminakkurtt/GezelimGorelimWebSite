@@ -12,22 +12,33 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Test') {
             steps {
-                echo 'Docker image oluşturuluyor...'
+                echo 'Proje dosyalari kontrol ediliyor...'
 
                 sh '''
-                    docker build \
-                    -t gezelim-gorelim:${BUILD_NUMBER} \
-                    -t gezelim-gorelim:latest \
-                    .
+                    test -f GezelimGorelimWebsite-main/index.html
+                    test -f GezelimGorelimWebsite-main/css/style.css
+                    test -d GezelimGorelimWebsite-main/img
+
+                    echo "Temel dosya kontrolleri basarili."
+                '''
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                echo 'Docker image olusturuluyor...'
+
+                sh '''
+                    docker build -t gezelim-gorelim:latest .
                 '''
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                echo 'Eski container kaldırılıyor...'
+                echo 'Eski container kontrol ediliyor...'
 
                 sh '''
                     docker rm -f gezelim-gorelim || true
@@ -37,25 +48,41 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Yeni container başlatılıyor...'
+                echo 'Yeni container baslatiliyor...'
 
                 sh '''
                     docker run -d \
                     --name gezelim-gorelim \
                     --restart unless-stopped \
                     -p 8080:80 \
-                    gezelim-gorelim:${BUILD_NUMBER}
+                    gezelim-gorelim:latest
+                '''
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                echo 'Web sitesi kontrol ediliyor...'
+
+                sh '''
+                    sleep 3
+                    curl -f http://localhost:8080
                 '''
             }
         }
 
         stage('Verify') {
             steps {
-                echo 'Deployment kontrol ediliyor...'
+                echo 'Deployment durumu kontrol ediliyor...'
 
                 sh '''
+                    echo "----- CONTAINERS -----"
                     docker ps
-                    docker images gezelim-gorelim --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}"
+
+                    echo "----- WEBSITE CHECK -----"
+                    curl -I http://localhost:8080
+
+                    echo "Deployment kontrolu basarili."
                 '''
             }
         }
@@ -64,11 +91,16 @@ pipeline {
     post {
 
         success {
-            echo 'Deployment başarıyla tamamlandı!'
+            echo '========================================'
+            echo 'Deployment basariyla tamamlandi!'
+            echo 'Website: http://localhost:8080'
+            echo '========================================'
         }
 
         failure {
-            echo 'Deployment başarısız oldu.'
+            echo '========================================'
+            echo 'Deployment basarisiz oldu!'
+            echo '========================================'
         }
     }
 }
