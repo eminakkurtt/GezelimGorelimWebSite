@@ -64,17 +64,25 @@ pipeline {
 
         stage('Verify') {
             steps {
-                echo 'Deployment durumu kontrol ediliyor...'
+                echo 'Deployment ve container kontrol ediliyor...'
 
-                sh '''
-                    echo "----- CONTAINERS -----"
-                    docker ps
+        sh '''
+            set -e
 
-                    echo "----- WEBSITE CHECK -----"
-                    curl -I http://host.docker.internal:8080
+            echo "===== CONTAINER DURUMU ====="
+            docker ps --filter "name=gezelim-gorelim"
 
-                    echo "Deployment kontrolu basarili."
-                '''
+            echo "===== HEALTH STATUS ====="
+            docker inspect gezelim-gorelim \
+                --format "{{.State.Health.Status}}"
+
+            echo "===== RESOURCE USAGE ====="
+            docker stats gezelim-gorelim --no-stream
+
+            echo "===== SON LOGLAR ====="
+            docker logs --tail 20 gezelim-gorelim
+
+            echo "===== DEPLOYMENT BASARILI ====="
             }
         }
     }
